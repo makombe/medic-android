@@ -230,15 +230,15 @@ class ServerRepo {
 		prefs = ctx.getSharedPreferences(
 				"ServerRepo",
 				Context.MODE_PRIVATE);
-		save("https://gamma.dev.medicmobile.org");
-		save("https://gamma-cht.dev.medicmobile.org");
-		save("https://medic.github.io/atp");
+		//save("https://gamma.dev.medicmobile.org");
+		//save("https://gamma-cht.dev.medicmobile.org");
+		//save("https://medic.github.io/atp");
 	}
 
 	List<ServerMetadata> getServers() {
 		List servers = new LinkedList<ServerMetadata>();
 
-		servers.add(new ServerMetadata("Custom"));
+		servers.add(new ServerMetadata("Custom url"));
 
 		for(Map.Entry<String, ?> e : prefs.getAll().entrySet()) {
 			servers.add(new ServerMetadata(
