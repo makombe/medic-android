@@ -66,12 +66,12 @@ def getVersionCode = {
 }
 
 def getVersionName = {
-  System.env.TRAVIS_TAG ?: 'SNAPSHOT'
+  System.env.TRAVIS_TAG ?: 'v1.0.0'
 }
 
 android {
-  compileSdkVersion 28
-  buildToolsVersion '28.0.2'
+  compileSdkVersion 29
+  buildToolsVersion '29.0.2'
   packagingOptions {
     exclude 'META-INF/LICENSE'
     exclude 'META-INF/NOTICE'
@@ -82,7 +82,7 @@ android {
     versionName getVersionName()
     archivesBaseName = "${project.name}-${versionName}"
     minSdkVersion 19
-    targetSdkVersion 28
+    targetSdkVersion 29
     // When upgrading targetSdkVersion, check that the app menu still works on newer devices.
   }
 
@@ -124,10 +124,10 @@ android {
 
   signingConfigs {
     release {
-      storeFile file(System.env.ANDROID_KEYSTORE_PATH ?: signingConfigs.debug.storeFile)
-      storePassword System.env.ANDROID_KEYSTORE_PASSWORD ?: signingConfigs.debug.storePassword
-      keyAlias System.env.ANDROID_KEY_ALIAS ?: signingConfigs.debug.keyAlias
-      keyPassword System.env.ANDROID_KEY_PASSWORD ?: signingConfigs.debug.keyPassword
+     // storeFile file(System.env.ANDROID_KEYSTORE_PATH ?: signingConfigs.debug.storeFile)
+    //  storePassword System.env.ANDROID_KEYSTORE_PASSWORD ?: signingConfigs.debug.storePassword
+    //  keyAlias System.env.ANDROID_KEY_ALIAS ?: signingConfigs.debug.keyAlias
+     // keyPassword System.env.ANDROID_KEY_PASSWORD ?: signingConfigs.debug.keyPassword
     }
   }
 
@@ -139,7 +139,7 @@ android {
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'config/xwalk.pro', 'config/libsimprints.pro'
       shrinkResources true
-      signingConfig signingConfigs.release
+    //  signingConfig signingConfigs.release
     }
   }
 
