@@ -124,10 +124,26 @@ android {
 
   signingConfigs {
     release {
-     // storeFile file(System.env.ANDROID_KEYSTORE_PATH ?: signingConfigs.debug.storeFile)
-    //  storePassword System.env.ANDROID_KEYSTORE_PASSWORD ?: signingConfigs.debug.storePassword
-    //  keyAlias System.env.ANDROID_KEY_ALIAS ?: signingConfigs.debug.keyAlias
-     // keyPassword System.env.ANDROID_KEY_PASSWORD ?: signingConfigs.debug.keyPassword
+     /* def props = new Properties()
+
+      def fileInputStream = new FileInputStream(file('../signing.properties'))
+      props.load(fileInputStream)
+      fileInputStream.close()
+
+      storeFile = file(props['storeFilePath'])
+      storePassword = props['storePassword']
+      keyAlias = props['keyAlias']
+      keyPassword = props['keyPassword']*/
+
+     /* storeFile file(props['storeFilePath'] ?: signingConfigs.release.storeFile)
+      storePassword props['storePassword'] ?: signingConfigs.release.storePassword
+      keyAlias props['keyAlias'] ?: signingConfigs.release.keyAlias
+      keyPassword props['keyPassword'] ?: signingConfigs.release.keyPassword*/
+      
+      storeFile file(System.env.ANDROID_KEYSTORE_PATH ?: signingConfigs.debug.storeFile)
+      storePassword System.env.ANDROID_KEYSTORE_PASSWORD ?: signingConfigs.debug.storePassword
+      keyAlias System.env.ANDROID_KEY_ALIAS ?: signingConfigs.debug.keyAlias
+      keyPassword System.env.ANDROID_KEY_PASSWORD ?: signingConfigs.debug.keyPassword
     }
   }
 
@@ -139,7 +155,7 @@ android {
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'config/xwalk.pro', 'config/libsimprints.pro'
       shrinkResources true
-    //  signingConfig signingConfigs.release
+      signingConfig signingConfigs.release
     }
   }
 
