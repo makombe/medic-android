@@ -56,7 +56,7 @@ def getVersionCode = {
 }
 
 def getVersionName = {
-  System.env.TRAVIS_TAG ?: 'SNAPSHOT'
+  System.env.TRAVIS_TAG ?: 'v1.0.0'
 }
 
 android {
@@ -111,11 +111,26 @@ android {
   }
 
   signingConfigs {
-    release {
-      storeFile file(System.env.ANDROID_KEYSTORE_PATH ?: signingConfigs.debug.storeFile)
+    release { 
+      def props = new Properties()
+      def fileInputStream = new FileInputStream(file('../signing.properties'))
+      props.load(fileInputStream)
+      fileInputStream.close()
+      storeFile = file(props['storeFilePath'])
+      storePassword = props['storePassword']
+      keyAlias = props['keyAlias']
+      keyPassword = props['keyPassword']
+
+       storeFile file(props['storeFilePath'] ?: signingConfigs.release.storeFile)
+       storePassword props['storePassword'] ?: signingConfigs.release.storePassword
+       keyAlias props['keyAlias'] ?: signingConfigs.release.keyAlias
+       keyPassword props['keyPassword'] ?: signingConfigs.release.keyPassword
+      
+      
+      /*storeFile file(System.env.ANDROID_KEYSTORE_PATH ?: signingConfigs.debug.storeFile)
       storePassword System.env.ANDROID_KEYSTORE_PASSWORD ?: signingConfigs.debug.storePassword
       keyAlias System.env.ANDROID_KEY_ALIAS ?: signingConfigs.debug.keyAlias
-      keyPassword System.env.ANDROID_KEY_PASSWORD ?: signingConfigs.debug.keyPassword
+      keyPassword System.env.ANDROID_KEY_PASSWORD ?: signingConfigs.debug.keyPassword*/
     }
   }
 
@@ -292,6 +307,10 @@ android {
     surveillance_covid19_kenya {
       dimension = 'brand'
       applicationId = 'org.medicmobile.webapp.mobile.surveillance_covid19_kenya'
+    }
+    kenya_emr {
+      dimension = 'brand'
+      applicationId = 'org.medicmobile.webapp.mobile.kenya_emr'
     }
     covid_moh_mali {
       dimension = 'brand'
